@@ -1,0 +1,19 @@
+body {
+    background: black;
+    color: yellow;
+}
+
+#score {
+    color: red;
+    font-size: 10vmin;
+    text-align: center;
+}
+
+.correction {
+    color: lightgreen;
+}
+
+#container, #container > select, button {
+    font-size: 10vmin;
+    text-align: center;
+}
