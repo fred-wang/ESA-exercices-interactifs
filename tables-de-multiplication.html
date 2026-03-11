@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="style.css"/>
+<script src="script.js"></script>
+<script>
+  const searchParams = new URLSearchParams(document.location.search);
+  let n = parseInt(searchParams.get("n"), 10);
+  if (!isNaN(n) && n >= 2 && n <= 9)
+    addMultiplicationTable(n);
+  else
+    addAllMultiplicationTables();
+</script>
+<div id="score"></div>
+<div id="container"></div>
