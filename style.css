@@ -17,3 +17,13 @@ body {
     font-size: 10vmin;
     text-align: center;
 }
+
+a:link {
+    color: yellow;
+}
+a:visited {
+    color: lightyellow;
+}
+a:hover {
+    color: orange;
+}
