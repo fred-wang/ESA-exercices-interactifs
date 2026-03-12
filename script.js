@@ -43,10 +43,10 @@ const homonymsArray = [
   ["ÇA", "SA"],
 ];
 
-let questionsCount = 0;
-let correctAnswersCount = 0;
 let gSentences = [];
-let gShuffledSentences = [];
+let gShuffledSentences = null;
+let currentSentence;
+let gCorrectedAnswers;
 
 function addSentences(sentences) {
   gSentences.push.apply(gSentences, sentences);
@@ -62,19 +62,47 @@ function addAllMultiplicationTables() {
   for (let i = 2; i <= 9; i++) {
     for (let j = 2; j <= i; j++) {
       if (Math.random() < .5)
-	gSentences.push(`${i} × ${j} = (${i * j}).`);
+        gSentences.push(`${i} × ${j} = (${i * j}).`);
       else
-	gSentences.push(`${j} × ${i} = (${i * j}).`);
+        gSentences.push(`${j} × ${i} = (${i * j}).`);
     }
   }
 }
 
+function appendCorrection(aContainer, aSentence) {
+  let div = document.createElement("div");
+  div.className = "correction";
+  div.textContent = aSentence;
+  aContainer.appendChild(div);
+}
+
+function appendContinueButton(aContainer, aTextContent) {
+  let button = document.createElement("button");
+  button.textContent = aTextContent;
+  button.onclick = nextSentence;
+  aContainer.appendChild(button);
+}
+
 function nextSentence() {
-  // Show current score.
-  document.getElementById("score").innerHTML = `Score : ${Math.ceil(100*correctAnswersCount/(questionsCount||1))}%`;
+  let container = document.getElementById("container");
 
   // Show next sentence.
-  if (gShuffledSentences.length == 0) {
+  if (gShuffledSentences && gShuffledSentences.length == 0) {
+    let note = (20*(gSentences.length - gCorrectedAnswers.length)/gSentences.length).toFixed(1).replace(".0", "");
+    document.getElementById("stats").innerHTML = `${note}/20`;
+    container.innerHTML = "L'exercice est terminé !<br>";
+    if (gCorrectedAnswers.length == 0) {
+      container.innerHTML += "Félicitations, c'est un sans-faute !";
+    } else {
+      container.innerHTML += " Voici ce que tu dois réviser :";
+      gCorrectedAnswers.forEach(sentence => appendCorrection(container, sentence));
+    }
+    appendContinueButton(container, "Recommencer");
+    gShuffledSentences = null;
+    return;
+  }
+
+  if (!gShuffledSentences || gShuffledSentences.length == 0) {
     // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#JavaScript_implementation
     function shuffleArray(array) {
       for (var i = array.length - 1; i > 0; i--) {
@@ -86,25 +114,27 @@ function nextSentence() {
     }
     gShuffledSentences = structuredClone(gSentences);
     shuffleArray(gShuffledSentences);
+    currentSentence = 0;
+    gCorrectedAnswers = [];
   }
+
+  // Show current stats.
+  currentSentence++;
+  let stats = `Question ${currentSentence}/${gSentences.length}`;
+  stats +=` ; ${gCorrectedAnswers.length} erreur${gCorrectedAnswers.length >= 2 ? "s" : ""}`;
+  document.getElementById("stats").innerHTML = stats;
+
   let question = gShuffledSentences.pop();
-  let container = document.getElementById("container");
 
   function verifyAnswer(aCorrect) {
-    questionsCount++;
     if (aCorrect) {
-      correctAnswersCount++;
       nextSentence();
     } else {
       container.innerHTML = "";
-      let div = document.createElement("div");
-      div.className = "correction";
-      div.textContent = question.replace(/[()]/g, "").toUpperCase();
-      container.appendChild(div);
-      let button = document.createElement("button");
-      button.textContent = "Continuer";
-      button.onclick = nextSentence;
-      container.appendChild(button);
+      let correctedAnswer = question.replace(/[()]/g, "").toUpperCase();
+      gCorrectedAnswers.push(correctedAnswer);
+      appendCorrection(container, correctedAnswer);
+      appendContinueButton(container, "Continuer");
     }
   }
 
