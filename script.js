@@ -77,10 +77,12 @@ function appendCorrection(aContainer, aSentence) {
 }
 
 function appendContinueButton(aContainer, aTextContent) {
+  let div = document.createElement("div");
   let button = document.createElement("button");
   button.textContent = aTextContent;
   button.onclick = nextSentence;
-  aContainer.appendChild(button);
+  div.appendChild(button);
+  aContainer.appendChild(div);
 }
 
 function nextSentence() {
