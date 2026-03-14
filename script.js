@@ -1,5 +1,6 @@
 "use strict"
 
+// TODO: this should be configurable by the exercise page.
 const homonymsArray = [
   ["A", "À", "AS"],
   ["AIRE", "ERRE", "ÈRE", "AIR"],
@@ -21,6 +22,7 @@ const homonymsArray = [
   ["FAIM", "FIN"],
   ["FAUT", "FAUX"],
   ["HAIT", "HAIS", "EST", "HAIE", "ES"],
+  ["MA", "M'A", "M'AS"],
   ["MAIRE", "MÈRE", "MER"],
   ["MAÎTRE", "METTRE", "MÈTRE"],
   ["MI", "MIE"],
