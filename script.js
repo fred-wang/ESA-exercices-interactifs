@@ -1,6 +1,7 @@
 "use strict"
 
 const homonymsArray = [
+  ["A", "À", "AS"],
   ["AIRE", "ERRE", "ÈRE", "AIR"],
   ["ANCRE", "ENCRE"],
   ["AU", "EAU", "HAUT"],
@@ -16,6 +17,7 @@ const homonymsArray = [
   ["COUR", "COURS"],
   ["DANS", "DENT"],
   ["DO", "DOS"],
+  ["ET", "EST", "ES"], // not really homonyms...
   ["FAIM", "FIN"],
   ["FAUT", "FAUX"],
   ["HAIT", "HAIS", "EST", "HAIE", "ES"],
@@ -24,6 +26,8 @@ const homonymsArray = [
   ["MI", "MIE"],
   ["MONT", "MON"],
   ["MUR", "MÛRE"],
+  ["ON", "ONT"],
+  ["OU", "OÙ"],
   ["PAIRE", "PÈRE"],
   ["PATTE", "PÂTE"],
   ["PIN", "PAIN", "PEINT"],
